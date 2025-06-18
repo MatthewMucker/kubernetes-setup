@@ -45,6 +45,6 @@ kubeadm init --config kubeadm-config.yaml
 export USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
 mkdir -p $USER_HOME/.kube
 cp -i /etc/kubernetes/admin.conf $USER_HOME/.kube/config
-chown $(id -u):$(id -g) $USER_HOME/.kube/config
+chown $SUDO_UID:$SUDO_GID $USER_HOME/.kube/config
 
 echo "please run 02-setup.sh WITHOUT SUDO to continue the setup."
