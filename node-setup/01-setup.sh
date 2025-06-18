@@ -29,11 +29,26 @@ apt-mark hold kubelet kubeadm kubectl
 
 #Configure cgroup driver to systemd
 
+# Create kubeadm config file
+# Replace <<HOSTNAME>> with the actual hostname of the node
+sed -i "s/<<HOSTNAME>>/$HOSTNAME/g" kubeadm-config.yaml
+
+# Replace <<IP_ADDRESS>> with the actual IP address of the node
+sed -i "s/<<IP_ADDRESS>>/$(hostname -I | awk '{print $1}')/g" kubeadm-config.yaml
+
 #Create a cluster
 kubeadm init --config kubeadm-config.yaml
 
+# Copy kubeconfig to the user's home directory
+mkdir -p $HOME/.kube
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+
 #Make node1 a worker node
-kubectl label node kubernetesnode1 node-role.kubernetes.io/worker=worker
+kubectl label node $HOSTNAME node-role.kubernetes.io/worker=worker
+
+#Install Flannel CNI
+kubectl apply -f kube-flannel.yml
 
 #Install gateway CRDs
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml
