@@ -32,7 +32,7 @@ caCertificateValidityPeriod: 87600h0m0s
 certificateValidityPeriod: 8760h0m0s
 certificatesDir: /etc/kubernetes/pki
 clusterName: mucker-kubernetes
-controlPlaneEndpoing: "192.168.254.221:6443"
+controlPlaneEndpoint: "192.168.254.190:6443"
 controllerManager: {}
 dns: {}
 encryptionAlgorithm: RSA-2048
