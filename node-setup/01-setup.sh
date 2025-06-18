@@ -33,7 +33,7 @@ apt-mark hold kubelet kubeadm kubectl
 
 # Create kubeadm config file
 # Replace <<HOSTNAME>> with the actual hostname of the node
-sed -i "s/<<HOSTNAME>>/$HOSTNAME/g" kubeadm-config.yaml
+sed -i "s/<<HOSTNAME>>/$(uname -n)/g" kubeadm-config.yaml
 
 # Replace <<IP_ADDRESS>> with the actual IP address of the node
 sed -i "s/<<IP_ADDRESS>>/$(hostname -I | awk '{print $1}')/g" kubeadm-config.yaml
@@ -42,12 +42,13 @@ sed -i "s/<<IP_ADDRESS>>/$(hostname -I | awk '{print $1}')/g" kubeadm-config.yam
 kubeadm init --config kubeadm-config.yaml
 
 # Copy kubeconfig to the user's home directory
-mkdir -p $HOME/.kube
-cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-chown $(id -u):$(id -g) $HOME/.kube/config
+set USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
+mkdir -p $USER_HOME/.kube
+cp -i /etc/kubernetes/admin.conf $USER_HOME/.kube/config
+chown $(id -u):$(id -g) $USER_HOME/.kube/config
 
 #Make node1 a worker node
-kubectl label node $HOSTNAME node-role.kubernetes.io/worker=worker
+kubectl label node $(uname -n) node-role.kubernetes.io/worker=worker
 
 #Install Flannel CNI
 kubectl apply -f kube-flannel.yaml
