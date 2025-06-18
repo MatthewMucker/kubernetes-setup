@@ -42,7 +42,7 @@ sed -i "s/<<IP_ADDRESS>>/$(hostname -I | awk '{print $1}')/g" kubeadm-config.yam
 kubeadm init --config kubeadm-config.yaml
 
 # Copy kubeconfig to the user's home directory
-set USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
+export USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
 mkdir -p $USER_HOME/.kube
 cp -i /etc/kubernetes/admin.conf $USER_HOME/.kube/config
 chown $(id -u):$(id -g) $USER_HOME/.kube/config
