@@ -3,6 +3,8 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+set -x
+
 #Update the OS
 apt-get update && sudo apt-get -y upgrade
 

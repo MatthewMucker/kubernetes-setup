@@ -3,6 +3,8 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+set -x
+
 #Install containerd
 wget https://github.com/containerd/containerd/releases/download/v2.1.2/containerd-2.1.2-linux-amd64.tar.gz
 tar Cxzvf /usr/local containerd-2.1.2-linux-amd64.tar.gz
