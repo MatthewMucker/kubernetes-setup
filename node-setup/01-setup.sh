@@ -47,11 +47,4 @@ mkdir -p $USER_HOME/.kube
 cp -i /etc/kubernetes/admin.conf $USER_HOME/.kube/config
 chown $(id -u):$(id -g) $USER_HOME/.kube/config
 
-#Make node1 a worker node
-kubectl label node $(uname -n) node-role.kubernetes.io/worker=worker
-
-#Install Flannel CNI
-kubectl apply -f kube-flannel.yaml
-
-#Install gateway CRDs
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml
+echo "please run 02-setup.sh WITHOUT SUDO to continue the setup."
