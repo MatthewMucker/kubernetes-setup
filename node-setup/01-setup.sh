@@ -1,3 +1,8 @@
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 
+   exit 1
+fi
+
 #Install containerd
 wget https://github.com/containerd/containerd/releases/download/v2.1.2/containerd-2.1.2-linux-amd64.tar.gz
 tar Cxzvf /usr/local containerd-2.1.2-linux-amd64.tar.gz
