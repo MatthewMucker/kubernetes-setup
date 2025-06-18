@@ -6,7 +6,7 @@ fi
 #Install containerd
 wget https://github.com/containerd/containerd/releases/download/v2.1.2/containerd-2.1.2-linux-amd64.tar.gz
 tar Cxzvf /usr/local containerd-2.1.2-linux-amd64.tar.gz
-https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
+wget https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
 mv containerd.service /lib/systemd/system/
 systemctl daemon-reload
 systemctl enable --now containerd
