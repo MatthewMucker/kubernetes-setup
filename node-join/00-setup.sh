@@ -1,0 +1,1 @@
+../cluster-setup/00-setup.sh
