@@ -6,3 +6,6 @@ kubectl apply -f kube-flannel.yaml
 
 #Install gateway CRDs
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/standard-install.yaml
+
+#Allow the control plan node to run pods
+kubectl taint nodes --all node-role.kubernetes.io/control-plane:NoSchedule-
