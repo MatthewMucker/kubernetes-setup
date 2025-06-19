@@ -33,3 +33,4 @@ apt-mark hold kubelet kubeadm kubectl
 #Join a cluster
 echo "On the cluster primary node run kubeadm token create --print-join-command"
 echo "Then run that command on this node." 
+echo "Then on the master node run kubectl label node <<nodename>> node-role.kubernetes.io/worker=worker"
