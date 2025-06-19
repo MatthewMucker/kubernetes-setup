@@ -33,13 +33,13 @@ apt-mark hold kubelet kubeadm kubectl
 
 # Create kubeadm config file
 # Replace <<HOSTNAME>> with the actual hostname of the node
-sed -i "s/<<HOSTNAME>>/$(uname -n)/g" kubeadm-config.yaml
+sed "s/<<HOSTNAME>>/$(uname -n)/g" kubeadm-config.yamltemplate > kubeadm-config.yaml
 
 # Replace <<IP_ADDRESS>> with the actual IP address of the node
 sed -i "s/<<IP_ADDRESS>>/$(hostname -I | awk '{print $1}')/g" kubeadm-config.yaml
 
 #Create a cluster
-kubeadm init --config kubeadm-config.yaml
+kubeadm init --config kubeadm-config.yaml --pod-network-cidr "10.244.0.0/16"
 
 # Copy kubeconfig to the user's home directory
 export USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
