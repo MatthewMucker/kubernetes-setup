@@ -39,7 +39,7 @@ sed "s/<<HOSTNAME>>/$(uname -n)/g" kubeadm-config.yamltemplate > kubeadm-config.
 sed -i "s/<<IP_ADDRESS>>/$(hostname -I | awk '{print $1}')/g" kubeadm-config.yaml
 
 #Create a cluster
-kubeadm init --config kubeadm-config.yaml --pod-network-cidr "10.244.0.0/16"
+kubeadm init --config kubeadm-config.yaml 
 
 # Copy kubeconfig to the user's home directory
 export USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
